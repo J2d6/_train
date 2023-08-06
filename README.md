@@ -15,26 +15,31 @@ git clone https://github.com/J2d6/_train.g
 
 ```bash
 cd _train
+```
 
 3.Installez les dépendances nécessaires en utilisant npm :
 
 ```bash
 npm install
+```
 
 4.Appliquez les migrations de la base de données avec Prisma :
 
 ```bash
 npx prisma migrate dev --name="nom_de_la_migration"
+```
 
 5.Générez le client Prisma pour interagir avec la base de données :
 
 ```bash
 npx prisma generate
+```
 
 6.Démarrez le serveur :
 
 ```bash
 npm start
+```
 
 Le serveur API backend sera maintenant en cours d'exécution sur http://localhost:3000.
 
