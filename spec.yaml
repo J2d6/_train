@@ -1,0 +1,467 @@
+openapi : 3.0.0
+info:
+  title : API PAS FCE
+  version : 1.0.0
+  description : API backend pour PAS FCE
+paths:
+  /api/client/auth:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref : "#/components/schemas/client"
+ 
+      summary: Authenticate a client login ... required a client password and contact
+      description: request this endpoint to authenticate a client with his contact and password in the request body
+      responses:
+        200:
+          description: authneticate
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access:
+                    type: string
+                    example : allow
+            
+        500:
+          description: Error has occured 
+          content:
+              application/json:
+                schema:
+                   type: object
+                   properties:
+                    error : 
+                       type : string 
+                       example : Incorrect password
+                     
+  /api/client/create:
+    post:
+      summary: Create client
+      description: Create client occurence in database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref : "#/components/schemas/client"
+      responses:
+        201:
+          description: Client created succefully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                      $ref : "#/components/schemas/Client"
+        400:
+          description: Failed to create Client. Error from client . "Check for response's error atributes"
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/CreateClientErrorFromClient"
+        500:
+          description: Server side Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerSideError"
+  /api/client/latest:
+    get:
+      summary: Get all clients (20 last clients) 
+      description: Get 20 latest clients ... request GET to /api/client/all to get all clients
+      responses:
+        200:
+          description: got 20 latest client
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Client"
+        500:
+          description: Error occured on the server
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorGeneral"
+  /api/client/all:
+    get:
+      summary: Get all clients  
+      description: Get allclients ... 
+      responses:
+        200:
+          description: got all client
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Client"
+        500:
+          description: Error occured on the server
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorGeneral"
+  /api/client/:id:
+    get:
+      summary: Get a siignle client by id
+      description: Get the client whose id is specified in the path parameter of he request
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idClient of the target client 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: Got the client
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Client"
+        404:
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ErrorNotFound"
+  /api/client/delete/:id :
+    delete:
+      parameters:
+        - name: id
+          in: path
+          description: idClient of the target client 
+          required : true
+          schema:
+            type : integer
+            example : 12
+      summary: Delete a client by idClient
+      description : Delete a client whose id is specified in the path parameter of the request
+      responses:
+        200:
+          description: Client deleted succefully ... returns the deleted cient
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data : 
+                    $ref: "#/components/schemas/Client"
+        404:
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ErrorNotFound"
+  /api/categorie/create:
+    post:
+      summary: create new Wagon Category
+      description: create a new Wagon Category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref : "#/components/schemas/categorie"
+      responses:
+        201:
+          description: new Category created succefully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    $ref : "#/components/schemas/ServerSideError"
+  /api/categorie/all:
+    summary: to get all categories dispo
+    description: to get all the categories 
+    get:
+      responses:
+        200:
+          description: got all categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+
+  /api/categorie/:id:
+    summary: to get infos about a categorie
+    description: to get infos about a categorie whose id is given
+    get:
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idCategorie of the target categorie 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: get a category whose id is given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+
+  /api/wagons/:id:
+    summary: to get infos about a wagon
+    description: to get infos about a specific wagon whose id is given
+    get:
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idWagon of the target categorie 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: get a wagons whose id is given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Wagon"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+        
+  /api/wagons/:
+    summary: get all wagons
+    description: to get all wagons to connect to a train
+    get:
+      responses:
+        200:
+          description: got all wagons
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Wagon"
+  /api/wagons/all/dispo:
+    summary: get all wagons dispo
+    description: to get all wagons dispo to connect to a train
+    get:
+      responses:
+        200:
+          description: got all wagons dispo 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Wagon"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+
+  /api/wagons/delete/:id :
+    summary: to delete a wagon whose id was specified
+    description: delete a wagon 
+    get:
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idWagon of the target categorie 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: get a wagon whose id is given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/wagon"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+components:
+  schemas:
+    Client : 
+      type: object
+      properties:
+        idClient:
+          type: integer
+          example : 123
+        nomClient : 
+          type: string
+          example: Dimbiniaina Jordany
+        emailClient : 
+          type : string
+          example : jd@gmail.com
+        contactClient : 
+          type: string
+          example : "0327875522"
+        passwordClient:
+          type : string
+          example : s3cur3
+    client : 
+      type: object
+      properties:
+        nomClient : 
+          type: string
+          example: Dimbiniaina Jordany
+        emailClient : 
+          type : string
+          example : jd@gmail.com
+        contactClient : 
+          type: string
+          example : "0327875522"
+        passwordClient:
+          type : string
+          example : s3cur3
+    CreateClientErrorFromClient:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            nom:
+              type: string
+              example: "Name must be not empty and do not contain specials characters, numbers or spaces."
+            email:
+              type : string
+              example : Already existst
+            contact: 
+              type: string
+              example: Already exists
+            validation : 
+              type: string
+              example: Invalid email syntax
+    ServerSideError : 
+      type: object
+      properties:
+        error: 
+          type: string
+          example: Error was occured, please reload . If persists, please contact the company
+    ErrorGeneral:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Error has occured on the server
+    ErrorNotFound:
+      type: object
+      properties:
+        error:
+          type: string
+          example : occurence not foundCategorie
+    Categorie:  
+      type: object
+      properties:
+        idCategorie : 
+          type : integer
+          example : 1
+        nomCategorie :
+          type : string
+          example : "VIP"
+        prixCategorie :
+          type: integer
+          example: 50000
+    categorie:
+      type: object
+      properties:
+        nomCategorie :
+          type : string
+          example : "VIP"
+        prixCategorie :
+          type: integer
+          example: 50000
+    Wagon:
+      type: object
+      properties:
+        idWagon:
+          type: integer
+          example: 165
+        idCategorie : 
+          type:  integer
+          example : 3
+        categorie : 
+          $ref: "#/components/schemas/Categorie"
+    wagon:
+      type: object
+      properties:
+        idWagon:
+          type: integer
+          example: 165
+        idCategorie : 
+          type:  integer
+          example : 3
