@@ -289,7 +289,7 @@ exports.isValidContact = isValidContact ;
 
 const authClient = async function (contact) {
     try {
-        const client = await prisma.client.findUnique({
+        const client = await  prisma.client.findUnique({
             where : {
                 contactClient : contact
             }
@@ -307,7 +307,7 @@ exports.authClient = authClient
 const authClientController = async function (req, res, next) {
     const response = {} ;
     try {
-        const authClientHost =  await authClient(req.body.contact);
+        const authClientHost =  await authClient(req.body.contactClient);
         if (authClient) {
             if (authClientHost.passwordClient === req.body.passwordClient) {
                 response.access = true
