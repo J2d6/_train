@@ -291,6 +291,28 @@ paths:
               schema:
                 $ref : "#/components/schemas/ServerSideError"
 
+  /api/wagons/create/:idCategorie:
+    summary: create a wagon 
+    description: create a wagon within a given category
+    post:
+      parameters:
+        - name: idCategorie
+          in: path
+          required : true
+          description: idCategorie of the target categorie 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: Wagon created 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref : "#/components/schemas/Wagon"
   /api/wagons/?id :
     summary: to get infos about a wagon
     description: to get infos about a specific wagon whose id is given
