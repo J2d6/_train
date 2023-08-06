@@ -10,7 +10,6 @@ const AllCategorieController = async function (req, res, next) {
     try {
         const allCategorie = await prisma.categorie.findMany();
         response.data = allCategorie;
-        console.log(response);
         res.status(200).json(response)
     } catch (error) {
         response.error = roor.message;
@@ -32,7 +31,6 @@ const testIfCategorieNameExist = async function (nomCategorie) {
             if (categorie) {
                 return true
             } else {
-                console.log("tsy nisy");
                 return false
             }
         } else {
@@ -47,7 +45,6 @@ const CreateCategorie = async function (nomCategorie, prixCategorie, nbPlace) {
     try {
         if (nomCategorie && prixCategorie && nbPlace) {
             const testNameFlag = await testIfCategorieNameExist(nomCategorie)
-            console.log(testNameFlag);
             if (!testNameFlag) {
                 // create
                 const newCategorie = await prisma.categorie.create({

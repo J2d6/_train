@@ -10,13 +10,13 @@ router.delete("/delete/:id", (req, res, next) => {
     DeleteWagonController(req, res, next);
 })
 
-router.get("/:id", (req, res, next) => {
+router.get("/", (req, res, next) => {
     GetWagonByIdController(req, res, next);
 })
 
-router.get("/", (req, res, next) => {
+router.get("/all", (req, res, next) => {
     GetAllWagonsController(req, res, next);
 })
 
-router.get("/all/dispo", (req, res, next) => GetDispoWagonsController(req, res, next) )
+router.get("/dispo", (req, res, next) => GetDispoWagonsController(req, res, next) )
 module.exports = router ;

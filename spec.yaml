@@ -291,13 +291,13 @@ paths:
               schema:
                 $ref : "#/components/schemas/ServerSideError"
 
-  /api/wagons/:id:
+  /api/wagons/?id :
     summary: to get infos about a wagon
     description: to get infos about a specific wagon whose id is given
     get:
       parameters:
         - name: id
-          in: path
+          in: query
           required : true
           description: idWagon of the target categorie 
           schema:
@@ -322,7 +322,7 @@ paths:
               schema:
                 $ref : "#/components/schemas/ServerSideError"
         
-  /api/wagons/:
+  /api/wagons/all:
     summary: get all wagons
     description: to get all wagons to connect to a train
     get:
@@ -338,7 +338,7 @@ paths:
                     type: array
                     items:
                       $ref : "#/components/schemas/Wagon"
-  /api/wagons/all/dispo:
+  /api/wagons/dispo:
     summary: get all wagons dispo
     description: to get all wagons dispo to connect to a train
     get:
@@ -364,7 +364,7 @@ paths:
   /api/wagons/delete/:id :
     summary: to delete a wagon whose id was specified
     description: delete a wagon 
-    get:
+    delete:
       parameters:
         - name: id
           in: path
