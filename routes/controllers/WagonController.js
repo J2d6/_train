@@ -91,6 +91,9 @@ const createNewWagon = async function createNewWagon(idCategorie) {
         const wagon = await prisma.wagon.findUnique({
             where : {
                 idWagon : +idWagon
+            }, 
+            include : {
+                categorie : true
             }
         })
         if (wagon) {
@@ -107,7 +110,7 @@ const createNewWagon = async function createNewWagon(idCategorie) {
   const GetWagonByIdController = async function (req, res, next) {
     const response = {};
     try {
-        const wagon = await GetWagonById(+req.params.id);
+        const wagon = await GetWagonById(+req.query?.id);
         response.data = wagon;
         res.status(200).json(response);
     } catch (error) {
