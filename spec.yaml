@@ -170,6 +170,44 @@ paths:
             application/json:
               schema:
                 $ref : "#/components/schemas/ErrorNotFound"
+  /api/categorie/update/:id:
+    post:
+      summary: update a Categorie
+      description: update a specific categorie whose idCategorie is given in the path parameter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref : "#/components/schemas/categorie"
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idCategorie of the target categorie 
+          schema:
+            type : integer
+            example : 3
+      responses:
+        200:
+          description: Category updated succefully ... returns the updated Cateogry
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref : "#/components/schemas/categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    $ref : "#/components/schemas/ServerSideError"          
+
   /api/categorie/create:
     post:
       summary: create new Wagon Category
@@ -413,9 +451,6 @@ components:
           type: string
           example: Error was occured, please reload . If persists, please contact the company
     ErrorGeneral:
-      type: object
-      properties:
-        error:
           type: string
           example: Error has occured on the server
     ErrorNotFound:
@@ -436,6 +471,9 @@ components:
         prixCategorie :
           type: integer
           example: 50000
+        nbPlace :
+          type: integer
+          example : 35
     categorie:
       type: object
       properties:
@@ -445,6 +483,9 @@ components:
         prixCategorie :
           type: integer
           example: 50000
+        nbPlace :
+          type: integer
+          example : 35
     Wagon:
       type: object
       properties:

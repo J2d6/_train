@@ -114,6 +114,57 @@ const GetCategorieByIdController = async function (req, res, next) {
     }
 }
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+const UpdateCategorieController = async function (req, res, next) {
+    const response = {};
+    try {
+        const UpdatedCategorie = await UpdateCategorie(req.params.id, req.body)
+        response.data = UpdatedCategorie;
+        res.status(200).json(response);
+    } catch (error) {
+        response.error = error.message;
+        res.status(500).json(response);
+    }
+}
+exports.UpdateCategorieController = UpdateCategorieController
+/**
+ * 
+ * @param {import('@prisma/client').Categorie} param0 
+ * @throws {Error} if error has occured 
+ */
+const UpdateCategorie = async function (idCategorieGiven, {  
+                            nomCategorie,
+                            nbPlace ,
+                            prixCategorie}) {
+                                try {
+                                    const updatedCategorie = await prisma.categorie.update({
+                                        where : {
+                                            idCategorie : +idCategorieGiven
+                                        },
+                                        data : {
+                                            nomCategorie : nomCategorie,
+                                            nbPlace : nbPlace ,
+                                            prixCategorie : prixCategorie,
+                                        }
+                                    });
+                                    
+                                    return updatedCategorie
+                                } catch (error) {
+                                    throw new Error(error.message)
+                                } finally {
+                                    await prisma.$disconnect();
+                                }
+    
+}
+
+
+
+
 exports.GetCategorieByIdController = GetCategorieByIdController
 exports.CreateCategorieController = CreateCategorieController;
 exports.CreateCategorie = CreateCategorie;
