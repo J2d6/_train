@@ -10,7 +10,7 @@ Suivez ces étapes pour installer et exécuter le projet localement :
 
 ```bash
 git clone https://github.com/J2d6/_train.g
-
+```
 2.Accédez au répertoire du projet :
 
 ```bash
