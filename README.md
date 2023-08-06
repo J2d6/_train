@@ -45,11 +45,11 @@ Le serveur API backend sera maintenant en cours d'exécution sur http://localhos
 
 
 
-##À propos du projet
+## À propos du projet
 
 Le projet _train est une API Backend conçue pour une application écolière de gestion de réservation de trains en ligne. Il offre une interface pour gérer les réservations, les trains, les itinéraires et les utilisateurs, tout en utilisant une base de données SQLite pour stocker les données.
 
-##Technologies utilisées
+## Technologies utilisées
 
 Ce projet utilise les technologies suivantes :
 
