@@ -11,22 +11,40 @@ paths:
         content:
           application/json:
             schema:
-              $ref : "#/components/schemas/client"
+              type: object
+              properties:
+                contactClient : 
+                  type: string
+                  example : 0321234513
+                passwordClient:
+                  type: string
+                  example: s3cur3
  
       summary: Authenticate a client login ... required a client password and contact
       description: request this endpoint to authenticate a client with his contact and password in the request body
       responses:
         200:
-          description: authneticate
+          description: authneticate succefully
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   access:
-                    type: string
-                    example : allow
-            
+                    type: boolean
+                    example : true
+                  data:
+                    $ref: "#/components/schemas/Client"
+        400:
+          description: authnetication failed (password incorrect)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access:
+                    type: boolean
+                    example : false
         500:
           description: Error has occured 
           content:
@@ -413,6 +431,76 @@ paths:
             application/json:
               schema:
                 $ref : "#/components/schemas/ServerSideError"
+  /api/train/:id :
+    summary: to get infos about a train
+    description: to get infos about a specific train whose id is given
+    get:
+      parameters:
+        - name: id
+          in: query
+          required : true
+          description: numTrain of the target  Train
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: got a Train whose id is given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Train"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+        404:
+          description: train not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example : "Train not found"
+  /api/train/create/:
+    summary: create a train
+    description: create a train and attach a given suite of wagons to it 
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nbWagon : 
+                  description: number of wagons to attach to it 
+                  type: integer
+                  example : 20
+                wagons : 
+                  description: array of idWagons to attach to the newy created train
+                  type: array
+                  items : 
+                    type: integer
+                    example : 34
+      responses:
+        200:
+          description: Train created 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref : "#/components/schemas/Train"
+
 components:
   schemas:
     Client : 
@@ -528,3 +616,17 @@ components:
         idCategorie : 
           type:  integer
           example : 3
+    Train : 
+      type: object
+      properties:
+        numTrain:
+          type: integer
+          example : 12
+        nbWagon : 
+          type: integer
+          example : 20
+        Wagons : 
+          type: array
+          items : 
+            $ref : "#/components/schemas/wagon"
+

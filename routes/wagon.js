@@ -20,3 +20,4 @@ router.get("/all", (req, res, next) => {
 
 router.get("/dispo", (req, res, next) => GetDispoWagonsController(req, res, next) )
 module.exports = router ;
+
