@@ -500,7 +500,51 @@ paths:
                 properties:
                   data:
                     $ref : "#/components/schemas/Train"
-
+  /api/voyage/create:
+    summary: Create avoyage
+    description: Create a voyage and train
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref : "#/components/schemas/VoyageRequest"
+      responses:
+        200:
+          description: Voyage created succefully
+          content:
+            application/json:
+              schema:  
+                type : object
+                properties:
+                  data:
+                      $ref: "#/components/schemas/Voyage"
+  /api/voyage/per_date:
+    summary: To get voyages on the given date
+    description: to get infos about voyages on the given date
+    get:
+      parameters:
+        - name: date
+          in: query
+          required : true
+          description: " dae of the voyages (format : AAAA/MM/DD"
+          schema:
+            type : string
+            example : 2023/8/16
+      responses:
+        200:
+          description: got voyages on the given date
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items : 
+                      $ref: "#/components/schemas/Voyage"
+        
 components:
   schemas:
     Client : 
@@ -629,4 +673,71 @@ components:
           type: array
           items : 
             $ref : "#/components/schemas/wagon"
+
+    VoyageRequest :
+      type: object
+      properties:
+        numTrain : 
+          type : integer
+          example : 2
+        dateVoyage : 
+          type: string
+          example: "2023/4/10"
+        heureDepart :
+          type: string
+          example:  7:00:00
+        depart :
+          type: string
+          example:  "Fianarantsoa"
+        destination : 
+          type : string
+          example: "Manakara"
+    Voyage : 
+      type: object
+      properties:
+        idVoyage:
+          type: integer
+          example: 56
+        numTrain : 
+          type : integer
+          example : 2
+        dateVoyage : 
+          type: string
+          example: "2023/4/10"
+        heureDepart :
+          type: string
+          example:  7:00:00
+        depart :
+          type: string
+          example:  "Fianarantsoa"
+        destination : 
+          type : string
+          example: "Manakara"
+        train: 
+            $ref: "#/components/schemas/Train"
+    VoyageWithoutWagon : 
+      type: object
+      properties:
+        idVoyage:
+          type: integer
+          example: 56
+        numTrain : 
+          type : integer
+          example : 2
+        dateVoyage : 
+          type: string
+          example: "2023/4/10"
+        heureDepart :
+          type: string
+          example:  7:00:00
+        depart :
+          type: string
+          example:  "Fianarantsoa"
+        destination : 
+          type : string
+          example: "Manakara"
+        train: 
+            $ref: "#/components/schemas/Train"
+
+        
 

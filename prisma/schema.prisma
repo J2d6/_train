@@ -16,13 +16,15 @@ model Voyage {
   destination String 
   depart String
   heureDepart DateTime
-
+  train Train @relation(fields: [numTrain] , references: [numTrain])
+  numTrain Int
 }
 
 model Train {
   numTrain Int @id @default(autoincrement())
   nbWagon Int 
   wagons Wagon[]
+  voyages Voyage[]
 }
 
 model Wagon {
