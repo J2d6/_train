@@ -6,7 +6,8 @@ const prisma = new PrismaClient()
 const createNewWagonController = async function (req, res, next) {
     const response = {};
     try {
-        const newWagon = await createNewWagon(+req.body.idCategorie);
+        console.log(req.params.id);
+        const newWagon = await createNewWagon(+req.params.id);
         response.data = newWagon;
         res.status(201).json(response);
     } catch (error) {
@@ -16,9 +17,11 @@ const createNewWagonController = async function (req, res, next) {
 }
 exports.createNewWagonController = createNewWagonController;
 const createNewWagon = async function createNewWagon(idCategorie) {
+    console.log(idCategorie);
     if (!idCategorie) {
         throw new Error("idCategorie invalid")
     }
+
     try {
         const categorieToLink = await prisma.categorie.findUnique({
             where : {
@@ -47,6 +50,7 @@ const createNewWagon = async function createNewWagon(idCategorie) {
 
 
   const DeleteWagon = async function (idWagon) {
+
     if (!(+idWagon)) {
         throw new Error("idWagon invalid")
     }
