@@ -50,12 +50,24 @@ model Client {
   contactClient String @unique
   emailClient String @unique
   passwordClient String 
+  billets Billet[]
 }
 
 model Place {
   idPlace Int
   wagon Wagon @relation(fields: [idWagon], references: [idWagon])
   idWagon Int
-
+  billet Billet @relation(fields: [numeroBillet], references: [numeroBillet])
+  numeroBillet Int
   @@id([idPlace, idWagon])
+}
+
+model Billet {
+  numeroBillet Int @id @default(autoincrement())
+  status String
+  avance Int
+  dateReservation DateTime 
+  places Place[]
+  client Client @relation(fields: [idClient], references: [idClient])
+  idClient Int
 }

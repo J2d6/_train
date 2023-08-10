@@ -119,3 +119,26 @@ const getTrainByIdController = async function (req, res, next) {
     }
 }
 exports.getTrainByIdController = getTrainByIdController;
+
+
+const GetAllTrains = async function () {
+    try {
+        const allTrains = await prisma.train.findMany();
+        return allTrains;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+const GetAllTrainController = async function (req, res, next ) {
+    const response = {};
+    try {
+        const allTrains = await GetAllTrains();
+        response.data = allTrains;
+        res.status(200).json(response);
+    } catch (error) {
+        res.error = error.message;
+        res.status(500).json(response);
+    }
+}
+exports.GetAllTrainController = GetAllTrainController;
