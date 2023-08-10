@@ -7,7 +7,6 @@ const makePrettierVoyage = function (voyage) {
         dateVoyage : `${voyage.dateVoyage.getFullYear()}/${voyage.dateVoyage.getMonth()}/${voyage.dateVoyage.getDate()}`,
         heureDepart : `${voyage.heureDepart.getHours()}:${voyage.heureDepart.getMinutes()}:${voyage.heureDepart.getSeconds()}`
     }
-
     return prettyVoyage;
 }
 exports.makePrettierVoyage = makePrettierVoyage;

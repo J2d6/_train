@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { CreateTrainController, getTrainByIdController } = require("./controllers/TrainConroller")
+const { CreateTrainController, getTrainByIdController, GetAllTrainController } = require("./controllers/TrainConroller")
 
 
 router.post("/create", (req, res, next) => {
@@ -9,7 +9,15 @@ router.post("/create", (req, res, next) => {
 })
 
 
-router.get("/:id", (req, res, next) =>{
+router.get("/get/unique/:id", (req, res, next) =>{
     getTrainByIdController(req, res, next);
 })
+
+
+router.get("/get/all", (req, res, next) => {
+    GetAllTrainController(req, res, next);
+} )
+
+
+
 module.exports = router;

@@ -431,7 +431,7 @@ paths:
             application/json:
               schema:
                 $ref : "#/components/schemas/ServerSideError"
-  /api/train/:id :
+  /api/train/get/unique/:id :
     summary: to get infos about a train
     description: to get infos about a specific train whose id is given
     get:

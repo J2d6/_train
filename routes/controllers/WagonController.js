@@ -16,6 +16,8 @@ const createNewWagonController = async function (req, res, next) {
     }
 }
 exports.createNewWagonController = createNewWagonController;
+
+
 const createNewWagon = async function createNewWagon(idCategorie) {
     console.log(idCategorie);
     if (!idCategorie) {
