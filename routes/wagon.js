@@ -3,7 +3,7 @@ const { createNewWagonController, DeleteWagonController, GetWagonByIdController,
 const router = express.Router();
 
 
-router.post("/create", (req, res, next) => {
+router.post("/create/:id", (req, res, next) => {
     createNewWagonController(req, res, next);
 })
 router.delete("/delete/:id", (req, res, next) => {
